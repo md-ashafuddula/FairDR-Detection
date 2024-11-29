@@ -64,6 +64,22 @@ self.base_model = ResNet50(
             )
 ```
 
+then additional layers,
+
+```
+# Additional layers
+self.global_pool = keras.layers.GlobalAveragePooling2D()
+self.dropout = keras.layers.Dropout(0.3)
+self.dense1 = keras.layers.Dense(128, activation='relu')
+self.output_layer = keras.layers.Dense(1, activation='sigmoid')
+self.fairness_weight = fairness_weight
+
+# Group-specific metrics
+self.male_metric = GroupMetric(name='male_recall')
+self.female_metric = GroupMetric(name='female_recall')
+```
+ are added
+
 ## Fairness employing
 
 1. Metrics like male_recall, female_recall, and fairness_penalty are employed during training. These metrics ensure that the model's performance is monitored separately for male and female groups, addressing potential fairness concerns.
